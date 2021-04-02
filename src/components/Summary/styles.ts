@@ -31,7 +31,8 @@ export const Container = styled.div`
             //altura entre a linha de entrada e do valor
             line-height:3rem;
         }
-
+        
+        // dentro da minha div procure a classe abaixo
         &.highlight-background{
             background: var(--green);
             color: #FFF;
@@ -39,3 +40,4 @@ export const Container = styled.div`
     }
 
 `;
+
