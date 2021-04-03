@@ -17,7 +17,7 @@ export const Container = styled.div`
             text-align: left;
             line-height: 1.5rem;
         }
-        
+
         //corpo da tabela
         td {
             padding: 1rem 2rem;
@@ -26,14 +26,17 @@ export const Container = styled.div`
             color: var(--text-body);
             border-radius: 0.25rem;
 
+            //&:first-child => quando o td e o primeiro filho vou colocar a cor tal
             &:first-child {
                 color: var(--text-title);
             }
 
+            //&.deposit => se minha classe do td for do tipo deposit vou mudar a cor
             &.deposit {
                 color: var(--green);
             }
 
+            //&.deposit => se minha classe do td for do tipo withdraw vou mudar a cor
             &.withdraw {
                 color: var(--red);
             }
