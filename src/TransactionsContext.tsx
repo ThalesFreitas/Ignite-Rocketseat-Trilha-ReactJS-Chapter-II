@@ -14,8 +14,18 @@ interface TransactionsProviderProps {
     children: ReactNode;
 }
 
-export const TransactionsContext = createContext<Transaction[]>([]);
+type TransactionInput = Omit<Transaction, 'id' | 'createdAt'>
 
+interface TransactionsContextData {
+    transactions: Transaction[];
+    createTransaction: (transaction: TransactionInput) => void;
+}
+
+export const TransactionsContext = createContext<TransactionsContextData>(
+    //para resolver o erro, passamos um objeto vazio forçamos uma tipagem
+    //no typescript, ou seja, enganando ele falando que esse objeto tem sim uma tipagem
+    {} as TransactionsContextData
+);
 
 export function TransactionsProvider({children}:TransactionsProviderProps) {
     const [transactions, setTransactions] = useState<Transaction []>([]);
@@ -25,8 +35,13 @@ export function TransactionsProvider({children}:TransactionsProviderProps) {
         .then(response => setTransactions(response.data.transactions))
     }, []);
 
+
+function createTransaction(transaction:TransactionInput) {
+    api.post('/transactions', transaction)
+}
+
     return (
-        <TransactionsContext.Provider value={transactions}>
+        <TransactionsContext.Provider value={{transactions, createTransaction }}>
             {children}
         </TransactionsContext.Provider>
     )
