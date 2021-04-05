@@ -4,6 +4,7 @@ import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { NewTransactionModal } from './components/NewTransactionModal';
 import { GlobalStyle } from "./styles/global";
+import { TransactionsContext } from './TransactionsContext';
 
 //Modal.setAppElement => configuração só para acessibilidade
 Modal.setAppElement('#root');
@@ -20,7 +21,7 @@ export function App() {
     }
 
   return (
-    <>
+    <TransactionsContext.Provider value={[]}>
     {/* Header onOpenNewTransactionModal=> passa uma função para que o elemento filho
     Header possa controlar o estado do elemento pai App */}
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal}/>
@@ -30,7 +31,7 @@ export function App() {
     onRequestClose={handleCloseNewTransactionModal}
     />
       <GlobalStyle/>
-    </>
+    </TransactionsContext.Provider>
   );
 }
 
