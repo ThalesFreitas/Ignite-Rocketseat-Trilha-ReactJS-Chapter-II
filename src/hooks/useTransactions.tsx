@@ -1,5 +1,5 @@
-import {createContext, useEffect, useState, ReactNode} from 'react';
-import { api } from './services/api';
+import {createContext, useEffect, useState, ReactNode, useContext} from 'react';
+import { api } from '../services/api';
 
 interface Transaction {
     id: number;
@@ -21,7 +21,7 @@ interface TransactionsContextData {
     createTransaction: (transaction: TransactionInput) => Promise<void>;
 }
 
-export const TransactionsContext = createContext<TransactionsContextData>(
+const TransactionsContext = createContext<TransactionsContextData>(
     //para resolver o erro, passamos um objeto vazio forçamos uma tipagem
     //no typescript, ou seja, enganando ele falando que esse objeto tem sim uma tipagem
     {} as TransactionsContextData
@@ -56,5 +56,11 @@ async function createTransaction(transactionInput:TransactionInput) {
             {children}
         </TransactionsContext.Provider>
     )
+}
+
+export function useTransactions() {
+    const context = useContext(TransactionsContext);
+
+    return context;
 }
 
