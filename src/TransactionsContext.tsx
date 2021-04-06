@@ -18,7 +18,7 @@ type TransactionInput = Omit<Transaction, 'id' | 'createdAt'>
 
 interface TransactionsContextData {
     transactions: Transaction[];
-    createTransaction: (transaction: TransactionInput) => void;
+    createTransaction: (transaction: TransactionInput) => Promise<void>;
 }
 
 export const TransactionsContext = createContext<TransactionsContextData>(
@@ -36,8 +36,19 @@ export function TransactionsProvider({children}:TransactionsProviderProps) {
     }, []);
 
 
-function createTransaction(transaction:TransactionInput) {
-    api.post('/transactions', transaction)
+async function createTransaction(transactionInput:TransactionInput) {
+   const response = await api.post('/transactions', {
+       ...transactionInput,
+        createdAt: new Date(),
+    });
+    //pega os dados da transação
+   const {transaction} = response.data;
+  
+   //Coloca os dados da nova transação na listagem
+   setTransactions([
+        ...transactions,
+        transaction,
+    ]);
 }
 
     return (
